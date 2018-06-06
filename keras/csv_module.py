@@ -21,7 +21,7 @@ This if the function that read the csv file with the log to train the neural net
 csv_file_name: the name of the csv file
 columns: the columns of the csv file that will be returning
 '''
-def load_data(csv_file_name, columns = []): 
+def load_csv_data(csv_file_name, columns = []): 
 	f = open(csv_file_name, 'rt')
 	reader = csv.reader(f, delimiter=';')
 
@@ -37,7 +37,7 @@ def load_data(csv_file_name, columns = []):
 	f.close()
 	return data	
 
-qtd_log_lines = 10
+#qtd_log_lines = 10
 
 '''
     [12, 'http://url', '2018-10-25']
@@ -45,10 +45,10 @@ qtd_log_lines = 10
     [12, 'http://url', '2018-10-25']
     [12, 'http://url', '2018-10-25']
 '''
-def load_input_matrix(csv_file_name, columns = []): 
-
-	qtd_features = len(columns) * qtd_log_lines    # 4 columns * number the log lines define a operation
-
-	data_train = load_data(csv_file_name, columns);
+#def load_input_matrix(csv_file_name, columns = []): 
+#
+#	qtd_features = len(columns) * qtd_log_lines    # 4 columns * number the log lines define a operation
+#
+#	data_train = load_data(csv_file_name, columns);
 
 

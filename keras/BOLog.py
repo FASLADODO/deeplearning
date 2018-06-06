@@ -1,13 +1,13 @@
 
 
 
-from bo_log_csv_module import load_data
+from csv_module import load_csv_data
 
-from bo_input_module import prepared
+#from bo_input_module import prepared
 
-data_train = load_data('/Users/jadson/Desktop/trainingmock.csv', [0,2,3,4]);
-print(data_train)
-print(len(data_train))
+cvs_raw_data = load_csv_data('/home/jadson/Documentos/deeplog/csvs/trainingmock.csv', [0,1,2,3,5]);
+print(cvs_raw_data)
+print(len(cvs_raw_data))
 
 
 ''' 
