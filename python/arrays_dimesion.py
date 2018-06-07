@@ -72,9 +72,18 @@ print(data.shape)
 #and your input shape becomes (number of samples, number of timesteps, number of features). This is in the documentation.
 #So if your feature dimension is 5, and you have 2 timesteps, your input could look like
 
-#[ [[1,2,3,4,5], [2,3,4,5,6]], [[2,4,6,8,0], [9,8,7,6,5]] ]
+#[ [ 
+#    [1,2,3,4,5], 
+#    [2,3,4,5,6]
+#  ],
+#  [ 
+#    [2,4,6,8,0], 
+#    [9,8,7,6,5]
+#  ] 
+#]
 
-#Your output shape depends on how you configure the net. If your LSTM/RNN has return_sequences=False, you'll have one label per sequence; 
+#Your output shape depends on how you configure the net. If your LSTM/RNN has return_sequences=False, you'll have one label 
+#per sequence; 
 #if you set return_sequences=True, you'll have one label per timestep.
 
 
@@ -83,3 +92,9 @@ print(data.shape)
 
 #And a 'sequence' is '[[1,2,3,4,5], [2,3,4,5,6]]' I assume.
 #and has 2 timesteps
+
+
+
+
+
+
