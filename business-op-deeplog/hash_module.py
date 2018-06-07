@@ -1,38 +1,29 @@
 
 
-from numpy import array
+
+from datetime import datetime
+import hashlib
 
 '''
-  This method normalize the values of the features betwenn 0 and 1 values
+  generate a hash for a text
 '''
-def normalize_input(cvs_3D_data, samples, features):
-  for feature_number in range( features ):
-      return normalize_feature(cvs_3D_data, samples, feature_number)
+def textual_hash(input_array, start_position, next_position):
+
+    for index in range(start_position, len(input_array), next_position ):
+        t_value = input_array[index].encode('utf8')
+        h = hashlib.sha1(t_value)
+        n =  int(h.hexdigest(), base=16)
+        input_array[index] = n
+    return input_array
 
 
-def normalize_feature(cvs_3D_data, samples, feature_number): 
-    # for each example
-    for sample in range( samples ):
 
-        # normaliza the values of one feature
-        bigger = 0
-        smaller = 0 
-        
-        for value in range( len(cvs_3D_data[sample]) ):
-            data = cvs_3D_data[sample][value][feature_number]
-            if bigger < data:
-                bigger = data
-            if smaller == 0 or  smaller > data:
-                smaller = data
-            cvs_3D_data[sample][value][feature_number]
+'''
+  generate a hash for a text
+'''
+def date_milliseconds(input_array, start_position, next_position):
 
-        for value in range( len(cvs_3D_data[sample]) ):
-            data = cvs_3D_data[sample][value][feature_number]
-            cvs_3D_data[sample][value][feature_number] = normalize (data, smaller, bigger )
-                
-    return cvs_3D_data
-
-
-def normalize(data, smaller, bigger): 
-    data = (data - smaller) /  ( bigger - smaller )
-    return data
+    for index in range(start_position, len(input_array), next_position ):
+        utc_time = datetime.strptime(input_array[index], "%Y-%m-%dT%H:%M:%S.%fZ")
+        input_array[index] = int(utc_time.timestamp())
+    return input_array

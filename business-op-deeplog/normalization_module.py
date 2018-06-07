@@ -5,34 +5,36 @@ from numpy import array
 '''
   This method normalize the values of the features betwenn 0 and 1 values
 '''
-def normalize_input(cvs_3D_data, samples, features):
-  for feature_number in range( features ):
-      return normalize_feature(cvs_3D_data, samples, feature_number)
+def normalize_feature(input_numeric_array, start_position, next_position):
 
+    # normaliza the values of one feature
+    bigger = 0
+    smaller = 0 
 
-def normalize_feature(cvs_3D_data, samples, feature_number): 
-    # for each example
-    for sample in range( samples ):
-
-        # normaliza the values of one feature
-        bigger = 0
-        smaller = 0 
+    # for each numeric feature define the bigger and smaller value
+    for index in range(start_position, len(input_numeric_array), next_position ):
         
-        for value in range( len(cvs_3D_data[sample]) ):
-            data = cvs_3D_data[sample][value][feature_number]
-            if bigger < data:
-                bigger = data
-            if smaller == 0 or  smaller > data:
-                smaller = data
-            cvs_3D_data[sample][value][feature_number]
+        data = float(input_numeric_array[index])
 
-        for value in range( len(cvs_3D_data[sample]) ):
-            data = cvs_3D_data[sample][value][feature_number]
-            cvs_3D_data[sample][value][feature_number] = normalize (data, smaller, bigger )
+        if bigger < data:
+            bigger = data
+        if smaller == 0 or  smaller > data:
+            smaller = data
+
+    # now normalize 
+    for index in range(start_position, len(input_numeric_array), next_position ):
+        input_numeric_array[index] = normalize ( float(input_numeric_array[index]), smaller, bigger )
+        print(input_numeric_array) 
                 
-    return cvs_3D_data
+    return input_numeric_array
 
 
 def normalize(data, smaller, bigger): 
-    data = (data - smaller) /  ( bigger - smaller )
+    print(' data '+str(data)+' smaller '+str(smaller)+' bigger '+str(bigger) )
+    if smaller == bigger:
+        data = 0
+    else:    
+        data = float(data - smaller) /  float( bigger - smaller )
+
+    print(' returning '+str(data))    
     return data

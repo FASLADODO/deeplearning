@@ -21,17 +21,21 @@ This if the function that read the csv file with the log to train the neural net
 csv_file_name: the name of the csv file
 columns: the columns of the csv file that will be returning
 '''
-def load_csv_data(csv_file_name, columns): 
+def load_csv_data(csv_file_name, included_cols): 
 	f = open(csv_file_name, 'rt')
 	reader = csv.reader(f, delimiter=';')
+	
 
 	data = []
 
 	for row in reader:
+		rowcontent = list(row)
+		rowColuns = rowcontent[0].split(',')
+		
 		col_number = 0	
-		for col in row:
-			if col_number in columns:
-				data.append( row[col_number] )
+		for col in rowColuns:
+			if col_number in included_cols:
+				data.append( rowColuns[col_number] )
 			col_number += 1
 
 	f.close()
