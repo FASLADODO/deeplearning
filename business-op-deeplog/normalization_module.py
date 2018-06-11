@@ -24,17 +24,14 @@ def normalize_feature(input_numeric_array, start_position, next_position):
     # now normalize 
     for index in range(start_position, len(input_numeric_array), next_position ):
         input_numeric_array[index] = normalize ( float(input_numeric_array[index]), smaller, bigger )
-        print(input_numeric_array) 
-                
+              
     return input_numeric_array
 
 
 def normalize(data, smaller, bigger): 
-    print(' data '+str(data)+' smaller '+str(smaller)+' bigger '+str(bigger) )
     if smaller == bigger:
         data = 0
     else:    
         data = float(data - smaller) /  float( bigger - smaller )
 
-    print(' returning '+str(data))    
     return data
