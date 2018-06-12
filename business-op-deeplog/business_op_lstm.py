@@ -24,12 +24,12 @@
 
 from __future__ import print_function
 
+from numpy import array
 
 from csv_module import load_csv_data
 from csv_module import load_csv_data2
 from array_module import reshape_input
 from prepare_input_module import prepareLSTMdata
-
 
 
 from keras.preprocessing import sequence
@@ -41,12 +41,13 @@ from keras.datasets import imdb
 
 # ==================== input values ====================
 
+#macos
+raw_data_file_name = '/Users/jadson/Desktop/tinytrainingmock.csv';
+deep_network_file_name = '/Users/jadson/Desktop/trainingdata.csv';
 
-#raw_data_file_name = '/Users/jadson/Desktop/tinytrainingmock.csv';
-raw_data_file_name = '/home/jadson/Documentos/deeplog/csvs/tinytrainingmock2.csv';
-
-#deep_network_file_name = '/Users/jadson/Desktop/trainingdata.csv';
-deep_network_file_name = '/home/jadson/Documentos/deeplog/csvs/trainingdata.csv';
+#ubuntu
+#raw_data_file_name = '/home/jadson/Documentos/deeplog/csvs/tinytrainingmock2.csv';
+#deep_network_file_name = '/home/jadson/Documentos/deeplog/csvs/trainingdata.csv';
 
 qtd_samples = 1 
 qtd_timesteps = 10
@@ -68,26 +69,44 @@ lstm_input_data = reshape_input(cvs_raw_data, qtd_samples, qtd_timesteps, qtd_fe
 #print('### 4 ###')
 #print(lstm_input_data)
 
-lstm_test_data = lstm_input_data
+# 5 features, 10 timesteps
+lstm_test_data = array([
+  [0.1, 1.0, 0.1, 1.0, 0.0],
+  [0.2, 0.9, 0.1, 1.0, 0.0],
+  [0.3, 0.8, 0.1, 1.0, 0.0],
+  [0.4, 0.7, 0.1, 1.0, 0.0],
+  [0.5, 0.6, 0.1, 1.0, 0.0],
+  [0.6, 0.5, 0.1, 1.0, 0.0],
+  [0.7, 0.4, 0.1, 1.0, 0.0],
+  [0.8, 0.3, 0.1, 1.0, 0.0],
+  [0.9, 0.2, 0.1, 1.0, 0.0],
+  [1.0, 0.1, 0.1, 1.0, 0.0]])
+
 
 # ==================== Build LSTM Model ===============
 
 
 model = Sequential()
 
-# the LSTM layer
+# The LSTM layer with 10 blocks
 #
-# dropout: Float between 0 and 1. Fraction of the units to drop for the linear transformation of the inputs.
-# recurrent_dropout: Float between 0 and 1. Fraction of the units to drop for the linear transformation of the recurrent state.
+# The three dimensions of this input are:
 #
-model.add(LSTM(10, dropout=0.2, recurrent_dropout=0.2))
+# *** Samples ***    : One sequence is one sample. A batch is comprised of one or more samples.
+# *** Time Steps *** : One time step is one point of observation in the sample.
+# *** Features ***   : One feature is one observation at a time step.
+#
+# the network assumes you have 1 or more samples 
+# and requires that you specify the number of time steps and the number of features.
+#
+model.add(LSTM(10, input_shape=(qtd_timesteps, qtd_features) ) )
 
 # full conected layer a "normal" neural network
-model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(5, activation='sigmoid'))
 
 
 # try using different optimizers and different optimizer configs
-model.compile(loss='binary_crossentropy',
+model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 
@@ -104,3 +123,4 @@ score, acc = model.evaluate(lstm_test_data, lstm_test_data,
                             batch_size=batch_size)
 print('Test score:', score)
 print('Test accuracy:', acc)
+
