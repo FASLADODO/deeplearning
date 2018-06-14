@@ -37,12 +37,12 @@ from process_learning_module import processLSTMLearning
 # ==================== input values ====================
 
 #macos
-#raw_data_file_name = '/Users/jadson/Desktop/tinytrainingmock.csv';
-#deep_network_file_name = '/Users/jadson/Desktop/trainingdata.csv';
+raw_data_file_name = '/Users/jadson/Desktop/tinytrainingmock.csv';
+deep_network_file_name = '/Users/jadson/Desktop/trainingdata.csv';
 
 #ubuntu
-raw_data_file_name = '/home/jadson/Documentos/deeplog/csvs/tinytrainingmock2.csv';
-deep_network_file_name = '/home/jadson/Documentos/deeplog/csvs/trainingdata.csv';
+#raw_data_file_name = '/home/jadson/Documentos/deeplog/csvs/tinytrainingmock2.csv';
+#deep_network_file_name = '/home/jadson/Documentos/deeplog/csvs/trainingdata.csv';
 
 qtd_samples = 1 
 qtd_timesteps = 10

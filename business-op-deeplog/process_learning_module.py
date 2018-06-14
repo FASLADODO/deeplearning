@@ -2,7 +2,7 @@
 
 from keras.preprocessing import sequence
 from keras.models import Sequential
-from keras.layers import Dense, Embedding
+from keras.layers import Dense, Embedding, Activation, Flatten
 from keras.layers import LSTM
 from keras.datasets import imdb
 
@@ -23,14 +23,28 @@ def processLSTMLearning(lstm_input_data, lstm_input_label, lstm_test_data, lstm_
 	# the network assumes you have 1 or more samples 
 	# and requires that you specify the number of time steps and the number of features.
 	#
-	model.add(LSTM(10, input_shape=(qtd_timesteps, qtd_features) ) )
+	# return_sequences=True    What this does is ensure that the LSTM cell returns all of 
+	#                          the outputs from the unrolled LSTM cell through time.
+	#
+	model.add( LSTM(10, input_shape=(qtd_timesteps, qtd_features), return_sequences=True ) )
+	model.add( LSTM(10, return_sequences=True) )
+	model.add( LSTM(10, return_sequences=True) )
+
+	#The problem is that you start with a three dimensional layer but 
+	#never reduce the dimensionality in any of the following layers.
+	#Try adding mode.add(Flatten()) before the last Dense layer
+	#
+	# https://github.com/keras-team/keras/issues/6351
+	#
+	model.add(Flatten())
 
 	# full conected layer a "normal" neural network
-	model.add(Dense(1, activation='sigmoid'))
+	#model.add(Dense(128, activation='relu'))
+	model.add(Dense(1, activation='softmax'))
 
 
 	# try using different optimizers and different optimizer configs
-	model.compile(loss='binary_crossentropy',
+	model.compile(loss='sparse_categorical_crossentropy',
 	              optimizer='adam',
 	              metrics=['accuracy'])
 
@@ -44,7 +58,7 @@ def processLSTMLearning(lstm_input_data, lstm_input_label, lstm_test_data, lstm_
 	#          validation_data=(lstm_test_data, lstm_test_data))
 
 	# without validation data
-	model.fit(lstm_input_data, lstm_input_label, epochs=3, batch_size=64)
+	model.fit(lstm_input_data, lstm_input_label, epochs=10, batch_size=1)
 
 	#score, acc = model.evaluate(lstm_test_data, lstm_test_data,
 	#                            batch_size=batch_size)
@@ -53,3 +67,7 @@ def processLSTMLearning(lstm_input_data, lstm_input_label, lstm_test_data, lstm_
 
 	scores = model.evaluate(lstm_test_data, lstm_test_label, verbose=0)
 	print("Accuracy: %.2f%%" % (scores[1]*100))
+
+
+
+
