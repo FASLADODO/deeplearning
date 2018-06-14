@@ -14,11 +14,24 @@ num_classes = 10
 # expected input data shape: (batch_size, timesteps, data_dim)
 model = Sequential()
 
-# returns a sequence of vectors of dimension 32
-model.add(LSTM(32, return_sequences=True, input_shape=(timesteps, data_dim))) 
-model.add(LSTM(32, return_sequences=True))  # returns a sequence of vectors of dimension 32
+#  input sample with 3 time steps and one feature observed at each time step
+#  
+#  t1 = 0.1
+#  t2 = 0.2
+#  t3 = 0.3
+#
+#  LSTM(1, return_sequences=True)
+#
+#  Running the example returns a sequence of 3 values, one hidden state output 
+#  for each input time step for the single LSTM cell in the laye
+#  
+# You must set return_sequences=True when stacking LSTM layers so that the second LSTM 
+#layer has a three-dimensional sequence input
+
+model.add(LSTM(32, return_sequences=True, input_shape=(timesteps, data_dim))) # returns a sequence of vectors of dimension 32
+model.add(LSTM(32, return_sequences=True))   # returns a sequence of vectors of dimension 32
 #model.add(LSTM(32, return_sequences=True))  # return a single vector of dimension 32
-model.add(LSTM(32))                         # return a single vector of dimension 32
+model.add(LSTM(32))                          # return a single vector of dimension 32
 model.add(Dense(10, activation='softmax'))
 
 model.compile(loss='categorical_crossentropy',
