@@ -40,12 +40,14 @@ from process_learning_module import processLSTMLearning
 # ==================== input values ====================
 
 #macos
-raw_data_file_name = '/Users/jadson/Desktop/tinytrainingmock.csv';
-deep_network_file_name = '/Users/jadson/Desktop/trainingdata.csv';
+raw_data_file_name     = '/Users/jadson/Desktop/tinytrainingmock.csv'
+deep_network_file_name = '/Users/jadson/Desktop/trainingdata.csv'
+businnes_op_lstm_model = '/Users/jadson/Desktop/final_model.h5'
 
 #ubuntu
-#raw_data_file_name = '/home/jadson/Documentos/deeplog/csvs/tinytrainingmock2.csv';
-#deep_network_file_name = '/home/jadson/Documentos/deeplog/csvs/trainingdata.csv';
+#raw_data_file_name      = '/home/jadson/Documentos/deeplog/csvs/tinytrainingmock2.csv'
+#deep_network_file_name  = '/home/jadson/Documentos/deeplog/csvs/trainingdata.csv'
+#businnes_op_lstm_model  = '/home/jadson/Documentos/deeplog/csvs/final_model.h5'
 
 samples = 1 
 timesteps = 10
@@ -125,6 +127,11 @@ model = buildLSTMModel(lstm_layer_size, dence_layer_size, timesteps, features)
 
 processLSTMLearning(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_test, y_test)
 
+# ==================== Save the Model ===============
+
+# save model to single file
+# sudo pip install h5py
+model.save(businnes_op_lstm_model)
 
 
 
