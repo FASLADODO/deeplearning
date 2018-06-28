@@ -10,9 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import br.ufrn.deeplearning.util.CSVUtils;
 
@@ -28,9 +26,7 @@ public class ExtractTestSetFromLogInformation {
 	
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		//prepareTestSet();
-		
-		normalizeData();
+		prepareTestSet();
 	}
 
 	
@@ -112,93 +108,7 @@ public class ExtractTestSetFromLogInformation {
 		
 	}
 	
-	/**
-	 * Generate a number form each URL
-	 * 
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 */
-	private static void normalizeData() throws IOException, FileNotFoundException {
-		
-		int sample = 0; // unfortunately just for 1 sample
-		
-		Set<String> distinctUrls = new HashSet<String>();
-		
-		for (int operation = 1; operation <= 10; operation++) {
-			
-			try(BufferedReader br = new BufferedReader(new FileReader(TEST_DATA_DIRECTORY+"xtest_"+sample+"_"+operation+".csv"))) {
-				String line = br.readLine();
-
-			    while (line != null) {
-			    		distinctUrls.add(line);
-			    		line = br.readLine();
-			    }
-			}
-		}
-		
-		
-		List<String> distinctUrlsList = new ArrayList<String>(distinctUrls);
-		
-		
-		int number = 1;
-		List<Integer> urlsNumberList = new ArrayList<Integer>(distinctUrlsList.size());
-		
-		for (int i = 0; i < distinctUrls.size(); i++) {
-			urlsNumberList.add(number++);
-		}
-		
-		
-		// save the mapping to return //
-		String csvFile = TEST_DATA_DIRECTORY+"urls_maps.csv";
-		
-		FileWriter writer = new FileWriter(csvFile);
-
-		for (int i = 0; i < distinctUrlsList.size(); i++) {
-        		CSVUtils.writeLine(writer, Arrays.asList( ""+distinctUrlsList.get(i), ""+urlsNumberList.get(i))  );
-		}
-        
-        writer.flush();
-        writer.close();
-        
-        
-        
-        /////////    change the url texto to numeric value ///////
-        
-        
-        
-        for (int operation = 1; operation <= 10; operation++) {
-			
-        	 	FileWriter finalWriter = new FileWriter(  TEST_DATA_DIRECTORY+"xtest_norm_"+sample+"_"+operation+".csv" );
-
-        	 	int steps = 0;
-			try(BufferedReader br = new BufferedReader(new FileReader(TEST_DATA_DIRECTORY+"xtest_"+sample+"_"+operation+".csv"))) {
-				
-				String line = br.readLine();
-
-			    while (line != null) {
-			    		int index = distinctUrlsList.indexOf((line));
-			    		
-			    		int urlNumber = urlsNumberList.get(index);
-			    		
-		    	        	CSVUtils.writeLine(finalWriter, Arrays.asList( ""+urlNumber)  );
-		    	        	steps++;
-			    		//System.out.println("distinctUrls.add(line): "+line);
-			    		line = br.readLine();
-			    }
-			}
-			
-			// complete the 100 times steps  //
-			for (int j = steps; j < 100; j++) {
-				CSVUtils.writeLine(finalWriter, Arrays.asList( ""+0)  );
-			}
-			
-			finalWriter.flush();
-			finalWriter.close();
-		}
-        
-        
-		
-	}
+	
 	
 	
 }
