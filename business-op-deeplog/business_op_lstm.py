@@ -49,10 +49,10 @@ businnes_op_lstm_model = '/Users/jadson/Desktop/final_model.h5'
 #deep_network_file_name  = '/home/jadson/Documentos/deeplog/csvs/trainingdata.csv'
 #businnes_op_lstm_model  = '/home/jadson/Documentos/deeplog/csvs/final_model.h5'
 
-samples = 1 
-timesteps = 10
-features = 5
-features_indexes = [0,1,2,3,5]
+samples = 156 
+timesteps = 100
+features = 1
+#features_indexes = [0,1,2,3,5]
 
 lstm_layer_size = 32
 dence_layer_size = 10
@@ -125,7 +125,7 @@ y_val =  np.array( [ [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] ] )  # 1
 
 model = buildLSTMModel(lstm_layer_size, dence_layer_size, timesteps, features)
 
-processLSTMLearning(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_test, y_test)
+traningLSTM(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_test, y_test)
 
 # ==================== Save the Model ===============
 

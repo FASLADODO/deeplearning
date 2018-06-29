@@ -3,6 +3,7 @@
 from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense, Embedding, Activation, Flatten
+from keras.optimizers import Adam
 from keras.layers import LSTM
 from keras.datasets import imdb
 
@@ -37,7 +38,9 @@ def buildLSTMModel(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 	return model;
 
 
-def processLSTMLearning(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_test, y_test):
+
+
+def traningLSTM(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_test, y_test):
 
 
 	# try using different optimizers and different optimizer configs
@@ -48,7 +51,7 @@ def processLSTMLearning(model, batch_size, epochs, x_train, y_train, x_val, y_va
 	# http://ruder.io/optimizing-gradient-descent/index.html#rmsprop
 	#
 	model.compile(loss='categorical_crossentropy',
-	              optimizer='rmsprop',
+	              optimizer=Adam(lr=0.001),
 	              metrics=['accuracy'])
 
 
@@ -74,4 +77,40 @@ def processLSTMLearning(model, batch_size, epochs, x_train, y_train, x_val, y_va
 
 
 
+
+
+def traningLSTM(model, batch_size, epochs, x_train, y_train, x_test, y_test):
+
+
+	# try using different optimizers and different optimizer configs
+	# loss:
+	# https://en.wikipedia.org/wiki/Loss_function
+	# http://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html
+	# optimizer:
+	# http://ruder.io/optimizing-gradient-descent/index.html#rmsprop
+	#
+	model.compile(loss='categorical_crossentropy',
+	              optimizer=Adam(lr=0.001),
+	              metrics=['accuracy'])
+
+
+	# ===================== Train LSTM  ===================
+
+	# with validation data
+	#model.fit(lstm_input_data, lstm_input_label,
+	#          batch_size=batch_size,
+	#          epochs=1,
+	#          validation_data=(lstm_test_data, lstm_test_data))
+
+	# without validation data
+	model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
+
+    
+	#score, acc = model.evaluate(lstm_test_data, lstm_test_data,
+	#                            batch_size=batch_size)
+	#print('Test score:', score)
+	#print('Test accuracy:', acc)
+
+	scores = model.evaluate(x_test, y_test, verbose=1)
+	print("Accuracy: %.2f%%" % (scores[1]*100))
 

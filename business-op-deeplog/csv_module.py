@@ -64,3 +64,58 @@ def save_csv_data(csv_file_name, cvs_data, qtd_feature):
     		wr.writerow(row)
 
 
+
+'''
+  LOAD ALL traning files data and return in one big array
+'''
+def load_traning_files(training_directory, samples):
+	
+	data = []
+
+	for sample in range( 1, samples+1 ):
+
+		with open( training_directory+'/'+'training_norm_'+str(sample)+'.csv' ) as csvfile:
+			readCSV = csv.reader(csvfile, delimiter=';')
+			for row in readCSV:
+				data.append(row)
+		#print(data)    	
+	
+	return data
+
+
+
+'''
+  LOAD ALL test files data and return in one big array
+'''
+def load_test_files(training_directory, samples):
+	
+	data = []
+
+	for sample in range( 1, samples+1 ):
+
+		with open( training_directory+'/'+'xtest_norm_1_'+str(sample)+'.csv' ) as csvfile:
+			readCSV = csv.reader(csvfile, delimiter=';')
+			for row in readCSV:
+				data.append(row)
+		#print(data)    	
+	
+	return data
+
+
+
+
+'''
+  LOAD ALL test values files data (or labels)  and return in one big array
+'''
+def load_test_values_files(training_directory):
+	
+	data = []
+
+	with open( training_directory+'/'+'ytest_1'+'.csv' ) as csvfile:
+		readCSV = csv.reader(csvfile, delimiter=',')
+		for row in readCSV:
+			data.append(row)
+	#print(data)    	
+	
+	return data
+
