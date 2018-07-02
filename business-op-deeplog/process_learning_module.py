@@ -7,8 +7,11 @@ from keras.optimizers import Adam
 from keras.layers import LSTM
 from keras.datasets import imdb
 
+from keras.utils import plot_model
+import matplotlib.pyplot as plt
 
-def buildLSTMModel(lstm_layer_size, dence_layer_size, timesteps, data_dim):
+
+def buildLSTMModel1(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 
 
 	model = Sequential()
@@ -34,7 +37,37 @@ def buildLSTMModel(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 	# full conected layer a "normal" neural network
 	#model.add(Dense(128, activation='relu'))
 	model.add(Dense(dence_layer_size, activation='softmax'))
+    plot_model(model, to_file='model_plot_1.png', show_shapes=True, show_layer_names=True)
+	return model;
 
+
+
+def buildLSTMModel2(lstm_layer_size, dence_layer_size, timesteps, data_dim):
+
+
+	model = Sequential()
+
+	# The LSTM layer with 10 blocks
+	#
+	# The three dimensions of this input are:
+	#
+	# *** Samples ***    : One sequence is one sample. A batch is comprised of one or more samples.
+	# *** Time Steps *** : One time step is one point of observation in the sample.
+	# *** Features ***   : One feature is one observation at a time step.
+	#
+	# the network assumes you have 1 or more samples 
+	# and requires that you specify the number of time steps and the number of features.
+	#
+	# return_sequences=True    What this does is ensure that the LSTM cell returns all of 
+	#                          the outputs from the unrolled LSTM cell through time.
+	#
+	model.add( LSTM(lstm_layer_size, input_shape=(timesteps, data_dim) ) )
+	
+
+	# full conected layer a "normal" neural network
+	#model.add(Dense(128, activation='relu'))
+	model.add(Dense(dence_layer_size, activation='softmax'))
+    plot_model(model, to_file='model_plot.png_2', show_shapes=True, show_layer_names=True)
 	return model;
 
 
@@ -103,7 +136,7 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_test, y_test):
 	#          validation_data=(lstm_test_data, lstm_test_data))
 
 	# without validation data
-	model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
+	history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
 
     
 	#score, acc = model.evaluate(lstm_test_data, lstm_test_data,
@@ -113,4 +146,23 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_test, y_test):
 
 	scores = model.evaluate(x_test, y_test, verbose=1)
 	print("Accuracy: %.2f%%" % (scores[1]*100))
+
+	# summarize history for accuracy
+	plt.plot(history.history['acc'])
+	plt.plot(history.history['val_acc'])
+	plt.title('model accuracy')
+	plt.ylabel('accuracy')
+	plt.xlabel('epoch')
+	plt.legend(['train', 'test'], loc='upper left')
+	plt.show()
+	# summarize history for loss
+	plt.plot(history.history['loss'])
+	plt.plot(history.history['val_loss'])
+	plt.title('model loss')
+	plt.ylabel('loss')
+	plt.xlabel('epoch')
+	plt.legend(['train', 'test'], loc='upper left')
+	plt.show()
+
+	
 

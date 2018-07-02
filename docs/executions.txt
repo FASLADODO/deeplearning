@@ -1,0 +1,26 @@
+
+
+
+Executions
+
+This file contains the executions used for this study.
+
+Model1 
+
+Layers: LSTM -> LSTM -> LSTM -> Dence
+
+Executions 1:
+
+lstm_layer_size = 32
+dence_layer_size = 10
+batch_size= 16
+epochs=30
+
+Acurracy : 0.00%
+
+Model2
+
+Layers: LSTM -> Dence
+
+
+Executions 1:

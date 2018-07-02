@@ -4,6 +4,7 @@ import numpy as np
 from numpy import array
 
 
+
 # my modules
 from csv_module import load_traning_files
 from csv_module import load_test_files
@@ -11,7 +12,8 @@ from csv_module import load_test_values_files
 from array_module import reshape_input
 
 # my modules for deep learning funcions
-from process_learning_module import buildLSTMModel
+from process_learning_module import buildLSTMModel1
+from process_learning_module import buildLSTMModel2
 from process_learning_module import traningLSTM
 
 
@@ -87,7 +89,7 @@ print(len(y_test))
 #print(len(y_train))
 
 
-model = buildLSTMModel(lstm_layer_size, dence_layer_size, timesteps, features)
+model = buildLSTMModel2(lstm_layer_size, dence_layer_size, timesteps, features)
 
 traningLSTM(model, batch_size, epochs, np.array(x_train), np.array(y_train), np.array(x_test), np.array(y_test) )
 
