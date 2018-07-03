@@ -20,9 +20,9 @@ from bo_module import traningLSTM
 # ==================== input values ====================
 
 #linux
-#base_directory          = '/home/jadson/git/deeplearning/data'
+base_directory          = '/home/jadson/git/deeplearning/data'
 #macos
-base_directory           = '/Users/jadson/git/deeplearning/data'
+#base_directory           = '/Users/jadson/git/deeplearning/data'
 
 training_directory      = base_directory+'/training'
 tests_directory         = base_directory+'/tests'
@@ -92,7 +92,7 @@ print(len(y_test))
 #print(len(y_train))
 
 
-model = buildLSTMModel2(lstm_layer_size, dence_layer_size, timesteps, features)
+model = buildLSTMModel1(lstm_layer_size, dence_layer_size, timesteps, features)
 
 traningLSTM(model, batch_size, epochs, np.array(x_train), np.array(y_train), np.array(x_test), np.array(y_test) )
 

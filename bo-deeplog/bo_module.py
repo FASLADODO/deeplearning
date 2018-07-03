@@ -8,7 +8,8 @@ from keras.layers import LSTM
 from keras.datasets import imdb
 
 # pip3 install pydot
-#from keras.utils import plot_model
+# sudo apt-get install graphviz
+from keras.utils import plot_model
 import matplotlib.pyplot as plt
 
 
@@ -38,7 +39,7 @@ def buildLSTMModel1(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 	# full conected layer a "normal" neural network
 	#model.add(Dense(128, activation='relu'))
 	model.add(Dense(dence_layer_size, activation='softmax'))
-	#plot_model(model, to_file='model_plot_1.png', show_shapes=True, show_layer_names=True)
+	plot_model(model, to_file='model_plot_1.jpg', show_shapes=True, show_layer_names=True)
 	return model;
 
 
@@ -68,7 +69,7 @@ def buildLSTMModel2(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 	# full conected layer a "normal" neural network
 	#model.add(Dense(128, activation='relu'))
 	model.add(Dense(dence_layer_size, activation='softmax'))
-	#plot_model(model, to_file='model_plot.png_2', show_shapes=True, show_layer_names=True)
+	plot_model(model, to_file='model_plot_2.jpg', show_shapes=True, show_layer_names=True)
 	return model;
 
 
