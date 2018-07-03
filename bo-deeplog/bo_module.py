@@ -7,7 +7,8 @@ from keras.optimizers import Adam
 from keras.layers import LSTM
 from keras.datasets import imdb
 
-from keras.utils import plot_model
+# pip3 install pydot
+#from keras.utils import plot_model
 import matplotlib.pyplot as plt
 
 
@@ -37,7 +38,7 @@ def buildLSTMModel1(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 	# full conected layer a "normal" neural network
 	#model.add(Dense(128, activation='relu'))
 	model.add(Dense(dence_layer_size, activation='softmax'))
-    plot_model(model, to_file='model_plot_1.png', show_shapes=True, show_layer_names=True)
+	#plot_model(model, to_file='model_plot_1.png', show_shapes=True, show_layer_names=True)
 	return model;
 
 
@@ -67,7 +68,7 @@ def buildLSTMModel2(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 	# full conected layer a "normal" neural network
 	#model.add(Dense(128, activation='relu'))
 	model.add(Dense(dence_layer_size, activation='softmax'))
-    plot_model(model, to_file='model_plot.png_2', show_shapes=True, show_layer_names=True)
+	#plot_model(model, to_file='model_plot.png_2', show_shapes=True, show_layer_names=True)
 	return model;
 
 
@@ -95,9 +96,11 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_tes
 	#          batch_size=batch_size,
 	#          epochs=1,
 	#          validation_data=(lstm_test_data, lstm_test_data))
-
-	# without validation data
-	model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_data=(x_val, y_val) )
+	#
+	# You may need to enable the validation split of your trainset. the validation happens in 1/3 of the trainset. 
+	
+	# with validation data
+	history = model.fit(x_train, y_train, validation_split=0.33, batch_size=batch_size, epochs=epochs, validation_data=(x_val, y_val) )
 
     
 	#score, acc = model.evaluate(lstm_test_data, lstm_test_data,
@@ -107,6 +110,7 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_tes
 
 	scores = model.evaluate(x_test, y_test, verbose=0)
 	print("Accuracy: %.2f%%" % (scores[1]*100))
+	plotInfomation(history)
 
 
 
@@ -134,9 +138,11 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_test, y_test):
 	#          batch_size=batch_size,
 	#          epochs=1,
 	#          validation_data=(lstm_test_data, lstm_test_data))
+	#
+	# You may need to enable the validation split of your trainset. the validation happens in 1/3 of the trainset. 
 
 	# without validation data
-	history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
+	history = model.fit(x_train, y_train, validation_split=0.33, batch_size=batch_size, epochs=epochs)
 
     
 	#score, acc = model.evaluate(lstm_test_data, lstm_test_data,
@@ -146,7 +152,15 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_test, y_test):
 
 	scores = model.evaluate(x_test, y_test, verbose=1)
 	print("Accuracy: %.2f%%" % (scores[1]*100))
+	plotInfomation(history)
 
+
+
+'''
+  Plot Information about the LSTM parameters
+'''
+def plotInfomation(history):
+	
 	# summarize history for accuracy
 	plt.plot(history.history['acc'])
 	plt.plot(history.history['val_acc'])

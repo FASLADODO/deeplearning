@@ -12,15 +12,18 @@ from csv_module import load_test_values_files
 from array_module import reshape_input
 
 # my modules for deep learning funcions
-from process_learning_module import buildLSTMModel1
-from process_learning_module import buildLSTMModel2
-from process_learning_module import traningLSTM
+from bo_module import buildLSTMModel1
+from bo_module import buildLSTMModel2
+from bo_module import traningLSTM
 
 
 # ==================== input values ====================
 
 #linux
-base_directory          = '/home/jadson/git/deeplearning/data'
+#base_directory          = '/home/jadson/git/deeplearning/data'
+#macos
+base_directory           = '/Users/jadson/git/deeplearning/data'
+
 training_directory      = base_directory+'/training'
 tests_directory         = base_directory+'/tests'
 model_file              = base_directory+'/lstm_model.h5'
