@@ -23,8 +23,8 @@ import br.ufrn.deeplearning.util.CSVUtils;
  */
 public class GenerateOutDataSet {
 	
-	
-	public final static String DEFAULT_DIRECTORY       = "/home/jadson/git/deeplearning/data/";
+	public final static String DEFAULT_DIRECTORY         = "/Users/jadson/git/deeplearning/data/";
+	//public final static String DEFAULT_DIRECTORY       = "/home/jadson/git/deeplearning/data/";
 	public final static String TRAINING_DATA_DIRECTORY = DEFAULT_DIRECTORY+"training/";
 	
 	
@@ -201,7 +201,10 @@ public class GenerateOutDataSet {
 
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < y.length; i++) {
-			builder.append(y[i]+";");
+			if(i < y.length-1)
+				builder.append(y[i]+";");
+			else
+				builder.append(y[i]);
 		}
 		CSVUtils.writeLine(writer, Arrays.asList( builder.toString() )  );
         

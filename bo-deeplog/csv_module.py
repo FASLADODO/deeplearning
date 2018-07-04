@@ -83,6 +83,24 @@ def load_traning_files(training_directory, samples):
 	return data
 
 
+'''
+  LOAD ALL traning output files data and return in one big array
+'''
+def load_traning_output_files(training_directory, samples):
+	
+	data = []
+
+	for sample in range( 1, samples+1 ):
+
+		with open( training_directory+'/'+'y_training_'+str(sample)+'.csv' ) as csvfile:
+			readCSV = csv.reader(csvfile, delimiter=';')
+			for row in readCSV:
+				data.append(row)
+	
+	return data
+
+
+
 
 '''
   LOAD ALL test files data and return in one big array
@@ -107,7 +125,7 @@ def load_test_files(training_directory, samples):
 '''
   LOAD ALL test values files data (or labels)  and return in one big array
 '''
-def load_test_values_files(training_directory):
+def load_test_output_files(training_directory):
 	
 	data = []
 
