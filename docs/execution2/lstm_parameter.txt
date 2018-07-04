@@ -1,4 +1,4 @@
-lstm_layer_size = 32
+lstm_layer_size = 100
 dence_layer_size = 10
 batch_size= 16
 epochs=30

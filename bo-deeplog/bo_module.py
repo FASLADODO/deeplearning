@@ -3,7 +3,7 @@
 from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense, Embedding, Activation, Flatten
-from keras.optimizers import Adam
+from keras.optimizers import Adam, Adamax, RMSprop
 from keras.layers import LSTM
 from keras.datasets import imdb
 
@@ -86,7 +86,9 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_tes
 	# http://ruder.io/optimizing-gradient-descent/index.html#rmsprop
 	#
 	model.compile(loss='categorical_crossentropy',
-	              optimizer=Adam(lr=0.001),
+	              #optimizer=RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0),
+	              #optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False),
+	              optimizer=Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0),
 	              metrics=['accuracy'])
 
 
@@ -128,7 +130,9 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_test, y_test):
 	# http://ruder.io/optimizing-gradient-descent/index.html#rmsprop
 	#
 	model.compile(loss='categorical_crossentropy',
-	              optimizer=Adam(lr=0.001),
+	              #optimizer=RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0),
+	              #optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False),
+	              optimizer=Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0),
 	              metrics=['accuracy'])
 
 
