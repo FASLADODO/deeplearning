@@ -54,7 +54,7 @@ public class NormalizeDataSet {
 	 */
 	private static void normalizeData() throws IOException, FileNotFoundException {
 		
-		int sample = 0; // unfortunately just for 1 sample
+		int sample = 1; // unfortunately just for 1 sample
 		
 		Set<String> distinctUrls = new HashSet<String>();
 		

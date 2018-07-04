@@ -21,9 +21,9 @@ from bo_module import traningLSTM
 # ==================== input values ====================
 
 #linux
-#base_directory          = '/home/jadson/git/deeplearning/data'
+base_directory          = '/home/jadson/git/deeplearning/data'
 #macos
-base_directory           = '/Users/jadson/git/deeplearning/data'
+#base_directory           = '/Users/jadson/git/deeplearning/data'
 
 training_directory      = base_directory+'/training'
 tests_directory         = base_directory+'/tests'
@@ -31,14 +31,14 @@ model_file              = base_directory+'/lstm_model.h5'
 
 
 # size of the data set
-traning_samples = 256 
+traning_samples = 518 
 test_samples = 10
 timesteps = 100
 features = 1
 classes = 10
 
 #configuration of lstm 
-lstm_layer_size = 32
+lstm_layer_size = 100
 dence_layer_size = 10
 batch_size= 16
 epochs=30

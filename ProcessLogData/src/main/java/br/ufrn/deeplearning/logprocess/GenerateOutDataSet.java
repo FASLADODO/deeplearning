@@ -23,8 +23,8 @@ import br.ufrn.deeplearning.util.CSVUtils;
  */
 public class GenerateOutDataSet {
 	
-	public final static String DEFAULT_DIRECTORY         = "/Users/jadson/git/deeplearning/data/";
-	//public final static String DEFAULT_DIRECTORY       = "/home/jadson/git/deeplearning/data/";
+	//public final static String DEFAULT_DIRECTORY         = "/Users/jadson/git/deeplearning/data/";
+	public final static String DEFAULT_DIRECTORY       = "/home/jadson/git/deeplearning/data/";
 	public final static String TRAINING_DATA_DIRECTORY = DEFAULT_DIRECTORY+"training/";
 	
 	

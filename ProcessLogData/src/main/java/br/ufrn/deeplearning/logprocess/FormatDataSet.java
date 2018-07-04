@@ -88,7 +88,7 @@ public class FormatDataSet {
 			}
 		}
 	
-		int sample = 0; // unfortunately just for 1 sample
+		int sample = 1; // unfortunately just for 1 sample
 		
 		for (int operation = 1; operation <= 10; operation++) {
 			
