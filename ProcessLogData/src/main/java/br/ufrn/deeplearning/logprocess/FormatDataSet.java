@@ -26,9 +26,9 @@ import java.util.List;
 import br.ufrn.deeplearning.util.CSVUtils;
 
 /**
- * step 2 from traning data
+ * STEP 1
  * 
- * remove " from "url"
+ * remove " from "url" and replece for sema url
  * 
  * @author Jadson Santos - jadsonjs@gmail.com
  *
@@ -37,8 +37,9 @@ public class FormatDataSet {
 
 	public final static String DEFAULT_DIRECTORY = "/home/jadson/git/deeplearning/data/";
 	
-	public final static String TRAINING_DATA_DIRECTORY = DEFAULT_DIRECTORY+"training/";
-	public final static String TEST_DATA_DIRECTORY     = DEFAULT_DIRECTORY+"tests/";
+	public final static String TRAINING_DATA_DIRECTORY       = DEFAULT_DIRECTORY+"training/";
+	public final static String TEST_DATA_DIRECTORY           = DEFAULT_DIRECTORY+"tests/";
+	public final static String VALIDATION_DATA_DIRECTORY     = DEFAULT_DIRECTORY+"validation/";
 	
 	/**
 	 * @param args
@@ -88,38 +89,123 @@ public class FormatDataSet {
 			}
 		}
 	
-		int sample = 1; // unfortunately just for 1 sample
-		
-		for (int operation = 1; operation <= 10; operation++) {
-			
-			String csvFile = TEST_DATA_DIRECTORY+"xtest_"+sample+"_"+operation+".csv";
-			
-			System.out.println("treating file: "+csvFile);
-			
-			List<String> lines = new ArrayList<>();
-			
-			try( BufferedReader br = new BufferedReader(new FileReader(csvFile))  ) {
-				String line = br.readLine();
 	
-			    while (line != null) {
-			    	line = formatURL(line);
-			        lines.add( line );
-			    	line = br.readLine();
-			    }
-			}
+		forfiles:
+		for (int i = 1; i < 1000000; i++) {
 			
-			FileWriter writer = new FileWriter(csvFile);
+			String csvFile = TEST_DATA_DIRECTORY+"test_"+i+".csv";
 			
-	        for (String line : lines) {
-	        		CSVUtils.writeLine(writer, Arrays.asList(line));
+			File file = new File(csvFile);
+			
+			if( file.exists() ) {
+				
+				System.out.println("treating file: "+csvFile);
+				
+				List<String> lines = new ArrayList<>();
+				
+				FileReader fileReader = new FileReader(file);
+				
+				try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+					
+				    String line = br.readLine();
+		
+				    while (line != null) {
+				    	line = formatURL(line);
+				        lines.add( line );
+				        line = br.readLine();
+				    }
+				}	
+				
+				FileWriter writer = new FileWriter(csvFile);
+		
+		        for (String line : lines) {
+		        		CSVUtils.writeLine(writer, Arrays.asList(line));
+				}
+		        
+		        writer.flush();
+		        writer.close();
+		        
+			}else {
+				System.out.println("end no more files ");
+				break forfiles;
 			}
-	        
-	        writer.flush();
-	        writer.close();
 		}
+		
+		
+		forfiles:
+			for (int i = 201; i < 1000000; i++) {
+				
+				String csvFile = VALIDATION_DATA_DIRECTORY+"test_"+i+".csv";
+				
+				File file = new File(csvFile);
+				
+				if( file.exists() ) {
+					
+					System.out.println("treating file: "+csvFile);
+					
+					List<String> lines = new ArrayList<>();
+					
+					FileReader fileReader = new FileReader(file);
+					
+					try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+						
+					    String line = br.readLine();
+			
+					    while (line != null) {
+					    	line = formatURL(line);
+					        lines.add( line );
+					        line = br.readLine();
+					    }
+					}	
+					
+					FileWriter writer = new FileWriter(csvFile);
+			
+			        for (String line : lines) {
+			        		CSVUtils.writeLine(writer, Arrays.asList(line));
+					}
+			        
+			        writer.flush();
+			        writer.close();
+			        
+				}else {
+					System.out.println("end no more files ");
+					break forfiles;
+				}
+			}
 	
 		
 	}
+	
+	
+//	int sample = 1; // unfortunately just for 1 sample
+//	
+//	for (int operation = 1; operation <= 10; operation++) {
+//		
+//		String csvFile = TEST_DATA_DIRECTORY+"xtest_"+sample+"_"+operation+".csv";
+//		
+//		System.out.println("treating file: "+csvFile);
+//		
+//		List<String> lines = new ArrayList<>();
+//		
+//		try( BufferedReader br = new BufferedReader(new FileReader(csvFile))  ) {
+//			String line = br.readLine();
+//
+//		    while (line != null) {
+//		    	line = formatURL(line);
+//		        lines.add( line );
+//		    	line = br.readLine();
+//		    }
+//		}
+//		
+//		FileWriter writer = new FileWriter(csvFile);
+//		
+//        for (String line : lines) {
+//        		CSVUtils.writeLine(writer, Arrays.asList(line));
+//		}
+//        
+//        writer.flush();
+//        writer.close();
+//	}
 	
 	
 

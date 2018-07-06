@@ -75,7 +75,42 @@ def buildLSTMModel2(lstm_layer_size, dence_layer_size, timesteps, data_dim):
 
 
 
-def traningLSTM(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_test, y_test):
+def buildLSTMModel3(lstm_layer_size, dence_layer_size, timesteps, data_dim):
+
+
+	model = Sequential()
+
+	# The LSTM layer with 10 blocks
+	#
+	# The three dimensions of this input are:
+	#
+	# *** Samples ***    : One sequence is one sample. A batch is comprised of one or more samples.
+	# *** Time Steps *** : One time step is one point of observation in the sample.
+	# *** Features ***   : One feature is one observation at a time step.
+	#
+	# the network assumes you have 1 or more samples 
+	# and requires that you specify the number of time steps and the number of features.
+	#
+	# return_sequences=True    What this does is ensure that the LSTM cell returns all of 
+	#                          the outputs from the unrolled LSTM cell through time.
+	#
+	model.add( LSTM(lstm_layer_size, return_sequences=True, input_shape=(timesteps, data_dim) ) )
+	model.add( LSTM(lstm_layer_size, return_sequences=True) )
+	model.add( LSTM(lstm_layer_size, return_sequences=True) )
+	model.add( LSTM(lstm_layer_size, return_sequences=True) )
+	model.add( LSTM(lstm_layer_size) )
+	
+
+	# full conected layer a "normal" neural network
+	#model.add(Dense(128, activation='relu'))
+	model.add(Dense(dence_layer_size, activation='softmax'))
+	plot_model(model, to_file='model_plot_3.jpg', show_shapes=True, show_layer_names=True)
+	return model;
+
+
+
+
+def traningLSTM1(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_test, y_test):
 
 
 	# try using different optimizers and different optimizer configs
@@ -119,7 +154,7 @@ def traningLSTM(model, batch_size, epochs, x_train, y_train, x_val, y_val, x_tes
 
 
 
-def traningLSTM(model, batch_size, epochs, x_train, y_train, x_test, y_test):
+def traningLSTM2(model, batch_size, epochs, x_train, y_train, x_test, y_test):
 
 
 	# try using different optimizers and different optimizer configs

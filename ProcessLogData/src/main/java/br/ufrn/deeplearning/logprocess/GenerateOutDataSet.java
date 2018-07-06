@@ -16,6 +16,8 @@ import java.util.List;
 import br.ufrn.deeplearning.util.CSVUtils;
 
 /**
+ * STEP 2
+ * 
  * This class generate the output, or labels ou y_train data set by a heuristic
  * 
  * @author jadson
@@ -24,9 +26,10 @@ import br.ufrn.deeplearning.util.CSVUtils;
 public class GenerateOutDataSet {
 	
 	//public final static String DEFAULT_DIRECTORY         = "/Users/jadson/git/deeplearning/data/";
-	public final static String DEFAULT_DIRECTORY       = "/home/jadson/git/deeplearning/data/";
-	public final static String TRAINING_DATA_DIRECTORY = DEFAULT_DIRECTORY+"training/";
-	
+	public final static String DEFAULT_DIRECTORY             = "/home/jadson/git/deeplearning/data/";
+	public final static String TRAINING_DATA_DIRECTORY       = DEFAULT_DIRECTORY+"training/";
+	public final static String TEST_DATA_DIRECTORY           = DEFAULT_DIRECTORY+"tests/";
+	public final static String VALIDATION_DATA_DIRECTORY     = DEFAULT_DIRECTORY+"validation/";
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		normalizeData();
@@ -88,8 +91,96 @@ public class GenerateOutDataSet {
 			}
 		}
 		
+		forfiles:
+			for (int i = 1; i < 1000000; i++) {
+				String csvFile = TEST_DATA_DIRECTORY+"test_"+i+".csv";
+				
+				String csvOutFile = TEST_DATA_DIRECTORY+"y_test_"+i+".csv";
+				
+				File file = new File(csvFile);
+				
+				if( file.exists() ) {
+					
+					Float[] y = new Float[10]; // value of output of 10 classes
+					
+					for (int f = 0; f < y.length; f++) {
+						y[f] = 0f;
+					}
+					
+					FileReader fileReader = new FileReader(file);
+					
+					try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+						
+					    String line = br.readLine();
+			
+					    while (line != null) {
+					    	urls.add( line );
+					        line = br.readLine();
+					    }
+					    
+					    
+					    // END ALL LINES
+					    
+					    applyHeuristic(urls, y);
+					    
+					    saveOutPutFile(csvOutFile, y);
+					    
+					    urls = new ArrayList<String>();
+					    
+					}	
+					
+				}else {
+					break forfiles;
+				}
+			}
+		
+		
+		forfiles:
+			for (int i = 201; i < 1000000; i++) {
+				String csvFile = VALIDATION_DATA_DIRECTORY+"test_"+i+".csv";
+				
+				String csvOutFile = VALIDATION_DATA_DIRECTORY+"y_test_"+i+".csv";
+				
+				File file = new File(csvFile);
+				
+				if( file.exists() ) {
+					
+					Float[] y = new Float[10]; // value of output of 10 classes
+					
+					for (int f = 0; f < y.length; f++) {
+						y[f] = 0f;
+					}
+					
+					FileReader fileReader = new FileReader(file);
+					
+					try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+						
+					    String line = br.readLine();
+			
+					    while (line != null) {
+					    	urls.add( line );
+					        line = br.readLine();
+					    }
+					    
+					    
+					    // END ALL LINES
+					    
+					    applyHeuristic(urls, y);
+					    
+					    saveOutPutFile(csvOutFile, y);
+					    
+					    urls = new ArrayList<String>();
+					    
+					}	
+					
+				}else {
+					break forfiles;
+				}
+			}
+		
 	}
 
+	
 	/**
 	 * Apply Heuristic to try to determinate the output for the 100 urls sequence.
 	 * 

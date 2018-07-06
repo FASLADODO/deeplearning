@@ -28,7 +28,9 @@ import java.util.Set;
 import br.ufrn.deeplearning.util.CSVUtils;
 
 /**
- * 3 normalize data of traning and test
+ * STEP 3
+ * 
+ * 3 normalize data of traning, test and validation
  * 
  * change all url by numbers
  * 
@@ -38,8 +40,9 @@ import br.ufrn.deeplearning.util.CSVUtils;
 public class NormalizeDataSet {
 	
 	public final static String DEFAULT_DIRECTORY       = "/home/jadson/git/deeplearning/data/";
-	public final static String TEST_DATA_DIRECTORY     = DEFAULT_DIRECTORY+"tests/";
-	public final static String TRAINING_DATA_DIRECTORY = DEFAULT_DIRECTORY+"training/";
+	public final static String TRAINING_DATA_DIRECTORY        = DEFAULT_DIRECTORY+"training/";
+	public final static String TEST_DATA_DIRECTORY           = DEFAULT_DIRECTORY+"tests/";
+	public final static String VALIDATION_DATA_DIRECTORY     = DEFAULT_DIRECTORY+"validation/";
 	
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -53,8 +56,6 @@ public class NormalizeDataSet {
 	 * @throws FileNotFoundException
 	 */
 	private static void normalizeData() throws IOException, FileNotFoundException {
-		
-		int sample = 1; // unfortunately just for 1 sample
 		
 		Set<String> distinctUrls = new HashSet<String>();
 		
@@ -83,21 +84,56 @@ public class NormalizeDataSet {
 			}
 		}
 
-		//////////////////for training data  //////////////////
-		for (int operation = 1; operation <= 10; operation++) {
+		//////////////////for test data  //////////////////
+		forfiles:
+		for (int i = 1; i < 1000000; i++) {
+			String csvFile = TEST_DATA_DIRECTORY+"test_"+i+".csv";
 			
-			String csvFile = TEST_DATA_DIRECTORY+"xtest_"+sample+"_"+operation+".csv";
+			File file = new File(csvFile);
 			
-			try( BufferedReader br = new BufferedReader(new FileReader(csvFile))  ) {
-				String line = br.readLine();
-
-			    while (line != null) {
-			    		distinctUrls.add(line);
-			    		line = br.readLine();
-			    }
+			if( file.exists() ) {
+				FileReader fileReader = new FileReader(file);
+				
+				try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+					
+				    String line = br.readLine();
+		
+				    while (line != null) {
+				    		distinctUrls.add( line );
+				        line = br.readLine();
+				    }
+				}	
+				
+			}else {
+				break forfiles;
 			}
 		}
 		
+		//////////////////for validation data  //////////////////
+		forfiles:
+		for (int i = 201; i < 1000000; i++) {
+			String csvFile = VALIDATION_DATA_DIRECTORY+"test_"+i+".csv";
+			
+			File file = new File(csvFile);
+			
+			if( file.exists() ) {
+				FileReader fileReader = new FileReader(file);
+				
+				try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+					
+				    String line = br.readLine();
+		
+				    while (line != null) {
+				    		distinctUrls.add( line );
+				        line = br.readLine();
+				    }
+				}	
+				
+			}else {
+				break forfiles;
+			}
+		}
+				
 		
 		
 		List<String> distinctUrlsList = new ArrayList<String>(distinctUrls);		
@@ -146,38 +182,80 @@ public class NormalizeDataSet {
 		}
 		
         
-        /////////    change the url texto to numeric value for test data ///////
-        
-       
-        for (int operation = 1; operation <= 10; operation++) {
+		/////////    change the url texto to numeric value for test data ///////
+		
+		forfiles:
+		for (int i = 1; i < 1000000; i++) {
+			String csvFile = TEST_DATA_DIRECTORY+"test_"+i+".csv";
 			
-        	 	FileWriter finalWriter = new FileWriter(  TEST_DATA_DIRECTORY+"xtest_norm_"+sample+"_"+operation+".csv" );
-
-        	 	int steps = 0;
-			try(BufferedReader br = new BufferedReader(new FileReader(TEST_DATA_DIRECTORY+"xtest_"+sample+"_"+operation+".csv"))) {
+			File file = new File(csvFile);
+			
+			if( file.exists() ) {
 				
-				String line = br.readLine();
+				FileWriter finalWriter = new FileWriter(  TEST_DATA_DIRECTORY+"test_norm_"+i+".csv" );
+				
+				FileReader fileReader = new FileReader(file);
+				
+				try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+					
+					String line = br.readLine();
 
-			    while (line != null) {
-			    		int index = distinctUrlsList.indexOf((line));
-			    		
-			    		int urlNumber = urlsNumberList.get(index);
-			    		
-		    	        	CSVUtils.writeLine(finalWriter, Arrays.asList( ""+urlNumber)  );
-		    	        	steps++;
-			    		//System.out.println("distinctUrls.add(line): "+line);
-			    		line = br.readLine();
-			    }
+				    while (line != null) {
+				    		int index = distinctUrlsList.indexOf((line));
+				    		
+				    		int urlNumber = urlsNumberList.get(index);
+				    		
+			    	        	CSVUtils.writeLine(finalWriter, Arrays.asList( ""+urlNumber)  );
+				    		line = br.readLine();
+				    }
+				    
+				}
+				
+				finalWriter.flush();
+				finalWriter.close();
+				
+			}else {
+				break forfiles;
 			}
+		}
+		
+		
+		/////////    change the url texto to numeric value for validion data ///////
+		
+		forfiles:
+		for (int i = 201; i < 1000000; i++) {
+			String csvFile = VALIDATION_DATA_DIRECTORY+"test_"+i+".csv";
 			
-			// complete the 100 times steps  //
-			for (int j = steps; j < 100; j++) {
-				CSVUtils.writeLine(finalWriter, Arrays.asList( ""+0)  );
+			File file = new File(csvFile);
+			
+			if( file.exists() ) {
+				
+				FileWriter finalWriter = new FileWriter(  VALIDATION_DATA_DIRECTORY+"test_norm_"+i+".csv" );
+				
+				FileReader fileReader = new FileReader(file);
+				
+				try(   BufferedReader br = new BufferedReader(fileReader)  ) {
+					
+					String line = br.readLine();
+
+				    while (line != null) {
+				    		int index = distinctUrlsList.indexOf((line));
+				    		
+				    		int urlNumber = urlsNumberList.get(index);
+				    		
+			    	        	CSVUtils.writeLine(finalWriter, Arrays.asList( ""+urlNumber)  );
+				    		line = br.readLine();
+				    }
+				    
+				}
+				
+				finalWriter.flush();
+				finalWriter.close();
+				
+			}else {
+				break forfiles;
 			}
-			
-			finalWriter.flush();
-			finalWriter.close();
-        }
+		}
 		
 	}
 

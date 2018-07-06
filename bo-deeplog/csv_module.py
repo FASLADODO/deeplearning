@@ -101,10 +101,82 @@ def load_traning_output_files(training_directory, samples):
 
 
 
+'''
+  LOAD ALL traning files data and return in one big array
+'''
+def load_test_files(test_directory, samples):
+	
+	data = []
+
+	for sample in range( 1, samples+1 ):
+
+		with open( test_directory+'/'+'test_norm_'+str(sample)+'.csv' ) as csvfile:
+			readCSV = csv.reader(csvfile, delimiter=';')
+			for row in readCSV:
+				data.append(row)
+		#print(data)    	
+	
+	return data
+
+
+'''
+  LOAD ALL traning output files data and return in one big array
+'''
+def load_test_output_files(test_directory, samples):
+	
+	data = []
+
+	for sample in range( 1, samples+1 ):
+
+		with open( test_directory+'/'+'y_test_'+str(sample)+'.csv' ) as csvfile:
+			readCSV = csv.reader(csvfile, delimiter=';')
+			for row in readCSV:
+				data.append(row)
+	
+	return data
+
+
+
+
+'''
+  LOAD ALL traning files data and return in one big array
+'''
+def load_validation_files(validation_directory, samples):
+	
+	data = []
+
+	for sample in range( 1, samples+1 ):
+
+		with open( validation_directory+'/'+'test_norm_'+str(sample+200)+'.csv' ) as csvfile:
+			readCSV = csv.reader(csvfile, delimiter=';')
+			for row in readCSV:
+				data.append(row)
+		#print(data)    	
+	
+	return data
+
+
+'''
+  LOAD ALL traning output files data and return in one big array
+'''
+def load_validation_output_files(validation_directory, samples):
+	
+	data = []
+
+	for sample in range( 1, samples+1 ):
+
+		with open( validation_directory+'/'+'y_test_'+str(sample+200)+'.csv' ) as csvfile:
+			readCSV = csv.reader(csvfile, delimiter=';')
+			for row in readCSV:
+				data.append(row)
+	
+	return data
+
+
 
 '''
   LOAD ALL test files data and return in one big array
-'''
+
 def load_test_files(training_directory, samples):
 	
 	data = []
@@ -118,13 +190,13 @@ def load_test_files(training_directory, samples):
 		#print(data)    	
 	
 	return data
-
+'''
 
 
 
 '''
   LOAD ALL test values files data (or labels)  and return in one big array
-'''
+
 def load_test_output_files(training_directory):
 	
 	data = []
@@ -136,4 +208,4 @@ def load_test_output_files(training_directory):
 	#print(data)    	
 	
 	return data
-
+'''
