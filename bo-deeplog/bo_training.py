@@ -17,6 +17,7 @@ from array_module import reshape_input
 # my modules for deep learning funcions
 from bo_module import buildLSTMModel1
 from bo_module import buildLSTMModel2
+from bo_module import buildLSTMModel3
 from bo_module import traningLSTM1
 from bo_module import traningLSTM2
 
@@ -102,7 +103,7 @@ y_validation = load_validation_output_files(validation_directory, validation_sam
 #print(len(y_train))
 
 
-model = buildLSTMModel1(lstm_layer_size, dence_layer_size, timesteps, features)
+model = buildLSTMModel3(lstm_layer_size, dence_layer_size, timesteps, features)
 
 traningLSTM1(model, batch_size, epochs, np.array(x_train), np.array(y_train), np.array(x_validation), np.array(y_validation), np.array(x_test), np.array(y_test) )
 
