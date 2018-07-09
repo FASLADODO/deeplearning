@@ -175,22 +175,22 @@ def load_validation_output_files(validation_directory, samples):
 
 
 '''
-  LOAD ALL test files data and return in one big array
-
-def load_test_files(training_directory, samples):
+  LOAD ALL test files data and return in one big array 
+'''
+def load_execution_files(execution_directory, sample_number):
 	
 	data = []
 
-	for sample in range( 1, samples+1 ):
+	#for sample in range( sample_number, samples+1 ):
 
-		with open( training_directory+'/'+'xtest_norm_1_'+str(sample)+'.csv' ) as csvfile:
-			readCSV = csv.reader(csvfile, delimiter=';')
-			for row in readCSV:
-				data.append(row)
+	with open( execution_directory+'/'+'xtest_norm_1_'+str(sample_number)+'.csv' ) as csvfile:
+		readCSV = csv.reader(csvfile, delimiter=';')
+		for row in readCSV:
+			data.append(row)
 		#print(data)    	
 	
 	return data
-'''
+
 
 
 

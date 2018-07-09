@@ -96,7 +96,7 @@ y_validation = load_validation_output_files(validation_directory, validation_sam
 
 
 #print('--- X_train ---')
-#print(x_train)
+print(x_train)
 #print(len(x_train))
 #print('--- y_train ---')
 #print(y_train)
